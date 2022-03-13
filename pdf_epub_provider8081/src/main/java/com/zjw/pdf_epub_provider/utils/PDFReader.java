@@ -222,7 +222,7 @@ public class PDFReader {
 
 
     /**
-     * 获取文件内容加上字体大小
+     * 获取文件内容加上字体大小 暂时无用
      *
      * @param file PDF路径
      * @param targetFilePath 生成style.txt路径, 目前使用项目路径
