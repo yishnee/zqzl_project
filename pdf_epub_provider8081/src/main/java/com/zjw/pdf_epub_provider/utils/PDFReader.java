@@ -71,7 +71,7 @@ public class PDFReader {
                     //打印标题1的文本
                     //System.out.println("Item:"+item.getTitle());
 
-                    sss += item.getTitle() + '\n';
+                    sss += "大标题:" + item.getTitle() + '\n';
 
                     //TODO 获取页码
                     if (item.getDestination() instanceof PDPageDestination) {
@@ -107,7 +107,7 @@ public class PDFReader {
                     while (child != null) {
                         //打印标题2的文本
                         //System.out.println("    Child:"+child.getTitle());
-                        sss += child.getTitle() + '\n';
+                        sss += "小标题:" + child.getTitle() + '\n';
 
 
                         //TODO 获取页码
