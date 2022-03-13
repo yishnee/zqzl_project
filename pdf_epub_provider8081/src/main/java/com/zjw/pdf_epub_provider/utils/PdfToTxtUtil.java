@@ -37,6 +37,7 @@ public class PdfToTxtUtil {
      * @throws FileNotFoundException 可能会抛出的异常（找不到文件）
      */
     public static void toTxt(String pdfFilePath, String targetFilePath) throws IOException {
+        log.info("将pdf文件集合转换为Txt文件集合...");
         File file = new File(pdfFilePath);
         File[] files = file.listFiles();
         for (int i = 0; i < files.length; i++) {

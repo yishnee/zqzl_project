@@ -55,6 +55,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
      */
     public PdfInfo savePdf(MultipartFile uploadFile, User user) throws IOException {
         //获取用户使用次数
+        //log.info("获取用户使用次数中...");
         Integer times = user.getUseTimes();
         times++;
         //获取用户专属的pdf文件夹，若为新用户则创建文件夹
@@ -69,6 +70,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         String savaSplitPath = savaSplitPathFile.getAbsolutePath();
 
         //将用户上传的pdf放入相应文件夹中
+        log.info("用户上传的pdf放入相应文件夹中...");
         byte[] uploadFileBytes = uploadFile.getBytes();
         File upFile = new File(pathTotal.getPdfPath() + "\\" + user.getUsername() + "\\" + uploadFile.getOriginalFilename());
         if (!upFile.exists()) {
@@ -78,6 +80,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         outputStream.write(uploadFileBytes);
         PdfDocument pdfDocument = new PdfDocument(new FileInputStream(upFile));
         //将pdf信息保存到数据库中
+        log.info("pdf信息保存到数据库中...");
         PdfInfo pdfInfo = pdfInfoDao.save(new PdfInfo()
                 .setPdfName(upFile.getName())
                 .setSize(upFile.length())
@@ -134,13 +137,13 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         Calendar calendar = new GregorianCalendar();
         PdfUtil.toHtmls(splitPdfPath, savaSplitPath);
         //Todo 生成文本信息 可以关掉
-        PdfToTxtUtil.toTxt(splitPdfPath, savaSplitPath);
+        //PdfToTxtUtil.toTxt(splitPdfPath, savaSplitPath);
 
         HtmlInfo htmlInfo = htmlInfoDao.save(new HtmlInfo()
                 .setSaveTime(CommonUtils.dateFormat(calendar))
                 .setSavePath(savaSplitPath)
                 .setUserId(user.getUserId()));
-        log.info("用户"+user.getUsername() + "的第" + user.getUseTimes() + "次文件:" + "html创建成功");
+        log.info("用户：" + user.getUsername() + "的第" + user.getUseTimes() + "次文件的html创建成功!");
         return htmlInfo;
     }
 
@@ -152,6 +155,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
      * @param user     用户信息
      */
     public String createEpub(PdfInfo pdfInfo, HtmlInfo htmlInfo, User user) {
+        log.info("创建epub中...");
         //获取需要转换为Epub的html文件集合路径
         String htmlInfoSavePath = htmlInfo.getSavePath();
         //获取该用户下的专属Epub文件夹，若不存在则创建
