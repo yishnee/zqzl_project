@@ -9,9 +9,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://localhost:3306/conveter?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
-      username: root
-      password:
+      url: jdbc:mysql://47.97.7.63:3306/conveter?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+      username: zqzl
+      password: zqzl123456
   jpa:
     database: mysql
     show-sql: false  #展示SQL语句
