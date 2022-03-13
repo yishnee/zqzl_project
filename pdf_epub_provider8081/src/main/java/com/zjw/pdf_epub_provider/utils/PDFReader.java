@@ -265,7 +265,7 @@ public class PDFReader {
                 out.write(text);
                 out.write("</body>");
                 out.close();
-                System.out.println("style.txt创建成功！");
+                System.out.println("style.html创建成功！");
             } catch (IOException e) {
             }
 
