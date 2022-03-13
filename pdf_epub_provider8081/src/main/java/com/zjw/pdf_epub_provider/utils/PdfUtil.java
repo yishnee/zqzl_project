@@ -114,7 +114,7 @@ public class PdfUtil {
     private static void showBookmark(HashMap<String, Object> bookmark) {
 
         //System.out.println (bookmark.get ( "Title" )) ;
-        bookTitle[strindex++] = bookmark.get("Title").toString();//自己写的
+        bookTitle[strindex++] = bookmark.get("Title").toString();
         @SuppressWarnings("unchecked")
         ArrayList<HashMap<String, Object>> kids = (ArrayList<HashMap<String, Object>>) bookmark.get("Kids");
         if (kids == null) {
@@ -151,12 +151,12 @@ public class PdfUtil {
 
                     pageNum = Integer.parseInt(page);
                     //System.out.println ("pageNum :"+ pageNum) ;
-                    pageNumber[strindex++] = pageNum-1;//自己写的
+                    pageNumber[strindex++] = pageNum-1;
                 } else {
 
                     pageNum = Integer.parseInt(page.substring(0, idx));
                     //System.out.println ("pageNum:" +pageNum) ;
-                    pageNumber[strindex++] = pageNum-1;//自己写的
+                    pageNumber[strindex++] = pageNum-1;
                 }
             }
             @SuppressWarnings("unchecked")
