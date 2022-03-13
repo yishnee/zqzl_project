@@ -64,6 +64,7 @@ public class PdfUtil {
 
         // 读取目录和对应页码
         PdfReader reader = new PdfReader(pdfFilePath);
+        log.info("获取标题和对应页码中...");
         List<HashMap<String, Object>> list = SimpleBookmark.getBookmark(reader);
         for (Iterator<HashMap<String, Object>> i = list.iterator(); i.hasNext(); ) {
             showBookmark(i.next());
@@ -73,7 +74,7 @@ public class PdfUtil {
             getPageNumbers(i.next());
         }
 
-
+        log.info("分离原pdf页面中...");
         //拆分为多个PDF文档
         doc.split(targetFilePath + "/{0}.pdf", 0);
 
@@ -88,6 +89,7 @@ public class PdfUtil {
      * @throws FileNotFoundException 可能会抛出的异常（找不到文件）
      */
     public static void toHtmls(String pdfFilePath, String targetFilePath) throws IOException {
+        log.info("pdf页面转化为html页面中...");
         File file = new File(pdfFilePath);
         File[] files = file.listFiles();
         for (int i = 0; i < files.length; i++) {
@@ -110,6 +112,7 @@ public class PdfUtil {
      * @param bookmark PDF路径
      */
     private static void showBookmark(HashMap<String, Object> bookmark) {
+
         //System.out.println (bookmark.get ( "Title" )) ;
         bookTitle[strindex++] = bookmark.get("Title").toString();//自己写的
         @SuppressWarnings("unchecked")

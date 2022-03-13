@@ -2,6 +2,7 @@ package com.zjw.pdf_epub_provider.utils;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.SimpleBookmark;
+import lombok.extern.slf4j.Slf4j;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.TOCReference;
@@ -18,6 +19,7 @@ import static com.zjw.pdf_epub_provider.utils.TxtUtil.updateTxt;
  *
  * @author Misaki
  */
+@Slf4j
 public class EpubUtil {
 
     /**
@@ -140,6 +142,7 @@ public class EpubUtil {
 
             // Write the Book as Epub
             epubWriter.write(book, new FileOutputStream(targetFile));
+            log.info("epub生成完毕...");
 
         } catch (Exception e) {
             e.printStackTrace();

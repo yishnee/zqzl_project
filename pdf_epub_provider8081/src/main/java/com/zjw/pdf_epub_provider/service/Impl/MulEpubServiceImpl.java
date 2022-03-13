@@ -35,21 +35,24 @@ public class MulEpubServiceImpl implements MulEpubService {
     public String MergePdfToEpub(MultipartFile[] files, String username) throws IOException {
         //获取用户信息
         User user = userDao.findByUsername(username);
-        // pdf合并工具类
-        PDFMergerUtility mergePdf = new PDFMergerUtility();
-        // 合成文件
-        /*int i = 0;
-        String[] epub_single = new String[files.length];*/
-        for (MultipartFile file : files) {
-            //epub_single[i++] = singleEpubService.pdfToEpub_Single(file, username);
-            mergePdf.addSource(file.getInputStream());
+        /*// pdf合并工具类
+        PDFMergerUtility mergePdf = new PDFMergerUtility();*/
+        // 多个PDF文件逐个转换
+        String epub_single = "";
+        for (int i = 0; i < files.length; i++) {
+            if (i != files.length-1) epub_single += singleEpubService.pdfToEpub_Single(files[i], username) + "\n";
+            else epub_single += singleEpubService.pdfToEpub_Single(files[i], username);
         }
+        /*// 合成文件
+        for (MultipartFile file : files) {
+            mergePdf.addSource(file.getInputStream());
+        }*/
         //获取用户专属的pdf文件夹，若为新用户则创建文件夹
         File userFile = new File(pdfTotal.getPdfPath() + "\\" + user.getUsername());
         if(!userFile.exists()){
             userFile.mkdir();
         }
-        // 设置合并生成pdf文件
+        /*// 设置合并生成pdf文件
         String path = pdfTotal.getPdfPath() + "\\" + user.getUsername() + "\\" + files[0].getOriginalFilename();
         File file = new File(path);
         if(!file.exists()){
@@ -58,7 +61,7 @@ public class MulEpubServiceImpl implements MulEpubService {
         mergePdf.setDestinationFileName(path);
         // 合并pdf
         mergePdf.mergeDocuments();
-        String epub_single = singleEpubService.pdfToEpub_Single(file, username);
+        String epub_single = singleEpubService.pdfToEpub_Single(file, username);*/
         return epub_single;
 
     }

@@ -45,7 +45,7 @@ public class MulPdfController {
     public String showUploadFilesName(MultipartFile[] uploadFiles) {
         String uploadFilesName = "";
         for (int i = 0; i < uploadFiles.length; i++) {
-            if (i != uploadFiles.length) uploadFilesName += uploadFiles[i].getOriginalFilename() + "、";
+            if (i != uploadFiles.length-1) uploadFilesName += uploadFiles[i].getOriginalFilename() + "、";
             else uploadFilesName += uploadFiles[i].getOriginalFilename();
         }
         return uploadFilesName;
