@@ -29,7 +29,6 @@ public class PdfToTxtUtil {
         doc.split(targetFilePath + "/{0}.pdf", 0);
     }
 
-
     /**
      * 将pdf文件集合转换为Txt文件集合
      *
@@ -89,6 +88,5 @@ public class PdfToTxtUtil {
             pdf.close();
         }
     }
-
 
 }

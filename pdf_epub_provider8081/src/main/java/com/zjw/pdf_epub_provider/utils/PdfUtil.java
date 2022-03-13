@@ -34,8 +34,11 @@ public class PdfUtil {
         return strindex;
     }
 
+    //目录索引
     public static int strindex = 0;
+    //目录的标题
     public static String[] bookTitle = new String[10000];
+    //目录的页码
     public static int[] pageNumber = new int[10000];
 
     /**
@@ -47,6 +50,7 @@ public class PdfUtil {
     public static void splitPdfs(String pdfFilePath, String targetFilePath) throws IOException {
         PdfDocument doc = new PdfDocument();
         doc.loadFromFile(pdfFilePath);
+
         //TODO 文件读取配置
         //读取pdf相关信息
         //PDFReader.getPDFCatalog(pdfFilePath);

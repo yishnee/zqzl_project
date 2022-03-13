@@ -5,9 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 
 /**
+ * txt的替换功能
+ * 目前无用
  * @author yishnee
  * @version 1.0
- * txt的替换功能
  */
 @Slf4j
 public class TxtUtil {

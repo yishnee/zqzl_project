@@ -28,10 +28,9 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Angela
+ * @author yishnee
  */
 public class PDFReader {
-
 
     /**
      * 获取格式化后的时间信息
