@@ -10,6 +10,8 @@ import java.io.Reader;
 /**
  * @author yishnee
  * @version 1.0
+ *
+ * 用于打印catalog.txt中的文件内容
  */
 public class readTxtFile {
     public static void readTxtFile(String filePath){

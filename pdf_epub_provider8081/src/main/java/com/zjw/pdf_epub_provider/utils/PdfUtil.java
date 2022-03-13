@@ -101,7 +101,10 @@ public class PdfUtil {
     }
 
 
-    //获取标题
+    /**
+     * 获取标题作为目录
+     * @param bookmark PDF路径
+     */
     private static void showBookmark(HashMap<String, Object> bookmark) {
         //System.out.println (bookmark.get ( "Title" )) ;
         bookTitle[strindex++] = bookmark.get("Title").toString();//自己写的
@@ -117,6 +120,11 @@ public class PdfUtil {
     }
 
     //获取页码
+
+    /**
+     * 获取标题的对应页码
+     * @param bookmark PDF路径
+     */
     public static void getPageNumbers(HashMap<String, Object> bookmark) {
         if (bookmark == null) {
             return;

@@ -430,6 +430,12 @@ public class PDFReader {
     }
 
 
+    /**
+     * 保存图片
+     * @param file 原始文件路径
+     * @param imgSavePath 保存的路径
+     * @throws IOException
+     */
     public void saveimages(String file,String imgSavePath) throws IOException {
         FileInputStream fis = new   FileInputStream(file);
         //加载 pdf 文档,获取PDDocument文档对象
@@ -466,7 +472,6 @@ public class PDFReader {
 
         return images;
     }
-
 
 
 
