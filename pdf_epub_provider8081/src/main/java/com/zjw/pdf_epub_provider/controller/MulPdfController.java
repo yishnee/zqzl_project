@@ -38,10 +38,18 @@ public class MulPdfController {
             e.printStackTrace();
             return msg;
         }
-        log.info("用户："+username+"成功批量上传了"+uploadFiles.length+"个文件："+uploadFiles.toString());
+        log.info("用户："+username+"成功批量上传了"+uploadFiles.length+"个文件："+showUploadFilesName(uploadFiles));
         return msg;
     }
 
+    public String showUploadFilesName(MultipartFile[] uploadFiles) {
+        String uploadFilesName = "";
+        for (int i = 0; i < uploadFiles.length; i++) {
+            if (i != uploadFiles.length) uploadFilesName += uploadFiles[i].getOriginalFilename() + "、";
+            else uploadFilesName += uploadFiles[i].getOriginalFilename();
+        }
+        return uploadFilesName;
+    }
 
 
 }

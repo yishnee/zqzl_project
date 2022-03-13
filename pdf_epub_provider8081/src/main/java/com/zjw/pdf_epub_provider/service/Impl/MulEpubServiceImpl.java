@@ -38,7 +38,10 @@ public class MulEpubServiceImpl implements MulEpubService {
         // pdf合并工具类
         PDFMergerUtility mergePdf = new PDFMergerUtility();
         // 合成文件
+        /*int i = 0;
+        String[] epub_single = new String[files.length];*/
         for (MultipartFile file : files) {
+            //epub_single[i++] = singleEpubService.pdfToEpub_Single(file, username);
             mergePdf.addSource(file.getInputStream());
         }
         //获取用户专属的pdf文件夹，若为新用户则创建文件夹
