@@ -1,4 +1,4 @@
-package com.zjw.pdf_epub_provider;
+package com.zjw.pdf_epub_provider.example;
 
 import java.io.FileOutputStream;
 
@@ -8,12 +8,14 @@ import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.EpubWriter;
 
+/**
+ * epublib中create book的代码示例
+ */
 public class Simple1 {
     public static void main(String[] args) {
         try {
 // Create new Book
             Book book = new Book();
-
 // Set the title
             book.getMetadata().addTitle("Epublib test book 1");
 

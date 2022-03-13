@@ -187,7 +187,11 @@ public class PDFReader {
         }
     }
 
-    /**打印一级目录**/
+    /**
+     * 获取一级目录
+     * 暂时无用
+     * @param file PDF路径
+     */
     public static void getPDFCatalog(String file){
         try {
             //打开pdf文件流
@@ -217,8 +221,14 @@ public class PDFReader {
         }
     }
 
-    //TODO 获取文件内容加字体大小
-    //获取文件内容加字体大小
+
+    /**
+     * 获取文件内容加上字体大小
+     *
+     * @param file PDF路径
+     * @param targetFilePath 生成style.txt路径, 目前使用项目路径
+     *                       TODO 路径修改成static
+     */
     public static void getFontName(String file,String targetFilePath){
         try {
             //打开pdf文件流
@@ -249,7 +259,6 @@ public class PDFReader {
                 }
             };
             String text = stripper.getText(document);
-            //stripper.
 
             //System.out.println(text);
             try {
@@ -291,8 +300,10 @@ public class PDFReader {
         }
     }
 
-
-    //TODO 获取标题
+    /**
+     * 获取标题作为目录 目前无用 在PdfUtil中已重写代码
+     * @param bookmark
+     */
     public static void showBookmark ( HashMap<String, Object> bookmark) {
         System.out.println (bookmark.get ( "Title" )) ;
         @SuppressWarnings("unchecked")
@@ -305,7 +316,10 @@ public class PDFReader {
         }
     }
 
-    //获取页码
+    /**
+     * 获取标题作为目录 目前无用 在PdfUtil中已重写代码
+     * @param bookmark
+     */
     public static void getPageNumbers(HashMap<String, Object> bookmark) {
         if (bookmark == null) {
             return;
@@ -339,11 +353,15 @@ public class PDFReader {
     }
 
 
-    /**获取PDF文档元数据**/
+    /**
+     * 获取PDF文档元数据
+     * 即是pdf文档中属性信息
+     * @param file
+     */
     public static void getPDFInformation(String file){
         try {
             //打开pdf文件流
-            FileInputStream fis = new   FileInputStream(file);
+            FileInputStream fis = new FileInputStream(file);
             //加载 pdf 文档,获取PDDocument文档对象
             PDDocument document=PDDocument.load(fis);
             /** 文档属性信息 **/
@@ -372,7 +390,11 @@ public class PDFReader {
         }
     }
 
-    /**提取pdf文本**/
+    /**
+     * 提取pdf文本
+     * 目前无用
+     * @param file
+     */
     public static void extractTXT(String file){
         try{
             //打开pdf文件流
@@ -398,6 +420,7 @@ public class PDFReader {
 
     /**
      * 提取部分页面文本
+     * 目前无用
      * @param file pdf文档路径
      * @param startPage 开始页数
      * @param endPage 结束页数
@@ -432,6 +455,7 @@ public class PDFReader {
 
     /**
      * 保存图片
+     * 目前无用
      * @param file 原始文件路径
      * @param imgSavePath 保存的路径
      * @throws IOException
@@ -448,6 +472,7 @@ public class PDFReader {
 
     }
 
+    //获取image的中间方法 如上
     public List<RenderedImage> getImagesFromPDF(PDDocument document) throws IOException {
         List<RenderedImage> images = new ArrayList<>();
         for (PDPage page : document.getPages()) {
@@ -456,7 +481,7 @@ public class PDFReader {
 
         return images;
     }
-
+    //获取image的中间方法 如上
     private List<RenderedImage> getImagesFromResources(PDResources resources) throws IOException {
         List<RenderedImage> images = new ArrayList<>();
 
@@ -473,10 +498,9 @@ public class PDFReader {
         return images;
     }
 
-
-
     /**
      * 提取图片并保存
+     * 目前无用
      * @param file PDF文档路径
      * @param imgSavePath 图片保存路径
      */
@@ -523,6 +547,7 @@ public class PDFReader {
 
     /**
      * 提取文本并保存
+     * 目前无用
      * @param file PDF文档路径
      * @param savePath 文本保存路径
      */
@@ -556,6 +581,7 @@ public class PDFReader {
 
     /**
      * 提取部分页面文本并保存
+     * 目前无用
      * @param file PDF文档路径
      * @param startPage 开始页数
      * @param endPage 结束页数
@@ -593,14 +619,4 @@ public class PDFReader {
             Logger.getLogger(PDFReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void main(String args[]){
-        String file="F:\\pdf\\2013\\000608_阳光股份_2013年年度报告(更新后)_1.pdf";
-        String savePath="E:\\result1.txt";
-        long startTime=System.currentTimeMillis();
-        extractTXT(file,savePath);
-        long endTime=System.currentTimeMillis();
-        System.out.println("读写所用时间为："+(endTime-startTime)+"ms");
-    }
-
 }

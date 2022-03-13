@@ -47,17 +47,18 @@ public class PdfUtil {
     public static void splitPdfs(String pdfFilePath, String targetFilePath) throws IOException {
         PdfDocument doc = new PdfDocument();
         doc.loadFromFile(pdfFilePath);
-        //TODO 读取pdf相关信息
+        //TODO 文件读取配置
+        //读取pdf相关信息
         //PDFReader.getPDFCatalog(pdfFilePath);
         // pdf详细信息 目前先不用
         //PDFReader.getPDFInformation(pdfFilePath);
         //目录文件打印
-        PDFReader.getPDFOutline(pdfFilePath);
+        //PDFReader.getPDFOutline(pdfFilePath);
         //style 文件打印
-        PDFReader.getFontName(pdfFilePath, targetFilePath);
+        //PDFReader.getFontName(pdfFilePath, targetFilePath);
 
 
-        // TODO 3.12
+        // 读取目录和对应页码
         PdfReader reader = new PdfReader(pdfFilePath);
         List<HashMap<String, Object>> list = SimpleBookmark.getBookmark(reader);
         for (Iterator<HashMap<String, Object>> i = list.iterator(); i.hasNext(); ) {
@@ -67,7 +68,6 @@ public class PdfUtil {
         for (Iterator<HashMap<String, Object>> i = list.iterator(); i.hasNext(); ) {
             getPageNumbers(i.next());
         }
-        // TODO 3.12
 
 
         //拆分为多个PDF文档
@@ -119,7 +119,6 @@ public class PdfUtil {
         }
     }
 
-    //获取页码
 
     /**
      * 获取标题的对应页码
