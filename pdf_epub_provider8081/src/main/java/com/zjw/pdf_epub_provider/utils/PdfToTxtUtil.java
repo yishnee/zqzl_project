@@ -29,7 +29,6 @@ public class PdfToTxtUtil {
         doc.split(targetFilePath + "/{0}.pdf", 0);
     }
 
-
     /**
      * 将pdf文件集合转换为Txt文件集合
      *
@@ -54,22 +53,20 @@ public class PdfToTxtUtil {
                 page = pdf.getPages().get(j);
                 sb.append(page.extractText(true));
 
-                // TODO 图片代码
+                /**
+                 * 获取文件内的图片并且保存到html的文件夹中
+                 */
                 int index=0;
                 if (page.extractImages()!=null){
                     for (BufferedImage image : page.extractImages()) {
                         //指定输出文件路径及名称
                         //File output = new File("D:\\data\\test\\" + String.format("Image_%d_%d.png", i,index++));
-
                         File output = new File(targetFilePath+"\\" + String.format("Image_%d_%d.png", i,index));
                         //将图片保存为PNG格式文件
                         ImageIO.write(image, "PNG", output);
                         index=index+1;
                     }
-
                 }
-
-
             }
             File TxtFile = new File(targetFilePath + "\\" + files[i].getName().substring(0, files[i].getName().indexOf(".")) + ".txt");
             if (!TxtFile.exists()) {
@@ -79,7 +76,6 @@ public class PdfToTxtUtil {
                     e.printStackTrace();
                 }
             }
-
             FileWriter writer;
             try {
                 //将StringBuilder对象中的文本写入到文本文件
@@ -89,32 +85,8 @@ public class PdfToTxtUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //
-            //
-            /*int index = 0;
-
-            //遍历PDF中的页
-            for (PdfPageBase pageone : (Iterable< PdfPageBase >) pdf.getPages()) {
-
-                //使用extractImages方法获取指定页上图片
-                for (BufferedImage image : pageone.extractImages()) {
-
-                    //指定输出文件路径及名称
-                    File output = new File("D:\\data\\test\\" + String.format("Image_%d.png", index++));
-
-                    //将图片保存为PNG格式文件
-                    ImageIO.write(image, "PNG", output);
-                }
-            }*/
-
-
-            //pdf.getConvertOptions().setPdfToHtmlOptions(false,false);
-            //File outFile = new File(targetFilePath +"\\"+ files[i].getName().substring(0,files[i].getName().indexOf(".")) + ".html");
-            //OutputStream outputStream = new FileOutputStream(outFile);
-            //pdf.saveToStream(outputStream, FileFormat.HTML);
             pdf.close();
         }
     }
-
 
 }

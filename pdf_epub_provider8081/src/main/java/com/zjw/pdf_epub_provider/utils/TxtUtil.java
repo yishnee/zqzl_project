@@ -5,20 +5,22 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 
 /**
+ * txt的替换功能
+ * 目前无用
  * @author yishnee
  * @version 1.0
  */
 @Slf4j
 public class TxtUtil {
-    public static void updateTxt(String TxtFilePath) {
+    public static void updateTxt(String txtFilePath) {
         try {
-            BufferedReader in = new BufferedReader(new FileReader(TxtFilePath));
+            BufferedReader in = new BufferedReader(new FileReader(txtFilePath));
             StringBuilder sb = new StringBuilder();
-            String str = "";
+            String str;
             str = sb.toString();
             str = str.replaceAll("Evaluation Warning : The document was created with Spire.PDF for java.", "");
             str = str.replaceAll("Evaluation Warning : The document was created with Spire.PDF for Java.", "");
-            File file = new File(TxtFilePath);
+            File file = new File(txtFilePath);
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(str.getBytes());
             fos.close();
