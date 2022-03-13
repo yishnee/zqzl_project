@@ -34,8 +34,11 @@ public class PdfUtil {
         return strindex;
     }
 
+    //目录索引
     public static int strindex = 0;
+    //目录的标题
     public static String[] bookTitle = new String[10000];
+    //目录的页码
     public static int[] pageNumber = new int[10000];
 
     /**
@@ -47,17 +50,19 @@ public class PdfUtil {
     public static void splitPdfs(String pdfFilePath, String targetFilePath) throws IOException {
         PdfDocument doc = new PdfDocument();
         doc.loadFromFile(pdfFilePath);
-        //TODO 读取pdf相关信息
+
+        //TODO 文件读取配置
+        //读取pdf相关信息
         //PDFReader.getPDFCatalog(pdfFilePath);
         // pdf详细信息 目前先不用
         //PDFReader.getPDFInformation(pdfFilePath);
         //目录文件打印
-        PDFReader.getPDFOutline(pdfFilePath);
+        //PDFReader.getPDFOutline(pdfFilePath);
         //style 文件打印
-        PDFReader.getFontName(pdfFilePath, targetFilePath);
+        //PDFReader.getFontName(pdfFilePath, targetFilePath);
 
 
-        // TODO 3.12
+        // 读取目录和对应页码
         PdfReader reader = new PdfReader(pdfFilePath);
         List<HashMap<String, Object>> list = SimpleBookmark.getBookmark(reader);
         for (Iterator<HashMap<String, Object>> i = list.iterator(); i.hasNext(); ) {
@@ -67,7 +72,6 @@ public class PdfUtil {
         for (Iterator<HashMap<String, Object>> i = list.iterator(); i.hasNext(); ) {
             getPageNumbers(i.next());
         }
-        // TODO 3.12
 
 
         //拆分为多个PDF文档
@@ -101,7 +105,10 @@ public class PdfUtil {
     }
 
 
-    //获取标题
+    /**
+     * 获取标题作为目录
+     * @param bookmark PDF路径
+     */
     private static void showBookmark(HashMap<String, Object> bookmark) {
         //System.out.println (bookmark.get ( "Title" )) ;
         bookTitle[strindex++] = bookmark.get("Title").toString();//自己写的
@@ -116,7 +123,11 @@ public class PdfUtil {
         }
     }
 
-    //获取页码
+
+    /**
+     * 获取标题的对应页码
+     * @param bookmark PDF路径
+     */
     public static void getPageNumbers(HashMap<String, Object> bookmark) {
         if (bookmark == null) {
             return;

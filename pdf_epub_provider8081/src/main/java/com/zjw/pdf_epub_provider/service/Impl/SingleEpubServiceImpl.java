@@ -127,8 +127,9 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //获取当前时间
         Calendar calendar = new GregorianCalendar();
         PdfUtil.toHtmls(splitPdfPath, savaSplitPath);
-        //Todo PdfToTxtUtil
+        //Todo 生成文本信息 可以关掉
         PdfToTxtUtil.toTxt(splitPdfPath, savaSplitPath);
+
         HtmlInfo htmlInfo = htmlInfoDao.save(new HtmlInfo()
                 .setSaveTime(CommonUtils.dateFormat(calendar))
                 .setSavePath(savaSplitPath)

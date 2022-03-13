@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
+ * 用于测试打印catalog.txt中的文件内容
+ * 目前无用
  * @author yishnee
  * @version 1.0
  */
