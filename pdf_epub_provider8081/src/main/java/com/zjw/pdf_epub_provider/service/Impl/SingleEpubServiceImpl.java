@@ -21,6 +21,12 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ *  用于：
+ *  1、保存和分离上传的 Pdf 文件并转换为 Html 文件
+ *  2、创建 Epub 文件
+ *  3、删除过程中多余的 Pdf 和 Html 文件
+ */
 @Slf4j
 @Service
 public class SingleEpubServiceImpl implements SingleEpubService {
@@ -235,19 +241,19 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         String splitPath = pdfInfo.getSplitPath();
         File oldFile = new File(splitPath);
         File[] files = oldFile.listFiles();
-        /*for (File file : files) {
+        for (File file : files) {
             file.delete();
-        }*/
+        }
         //获取保存html的文件夹，删除下面的所有文件夹,与上面同理
         String savePath = htmlInfo.getSavePath();
         File file = new File(savePath);
         File[] files1 = file.listFiles();
-       /* for (File file1 : files1) {
+        for (File file1 : files1) {
             while (file1.exists()) {
                 System.gc();
                 file1.delete();
             }
-        }*/
+        }
         //得到用户上传的pdf，并且保存将分隔pdf的文件夹作为目标文件夹
         File pdfFile = new File(pdfInfo.getSavePath());
 

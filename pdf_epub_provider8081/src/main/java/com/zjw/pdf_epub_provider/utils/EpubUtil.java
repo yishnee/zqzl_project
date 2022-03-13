@@ -17,7 +17,7 @@ import static com.zjw.pdf_epub_provider.utils.TxtUtil.updateTxt;
 /**
  * Epub操作工具类
  *
- * @author Misaki
+ * @author
  */
 @Slf4j
 public class EpubUtil {
