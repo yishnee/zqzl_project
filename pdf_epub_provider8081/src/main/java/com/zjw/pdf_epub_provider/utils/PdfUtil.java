@@ -57,7 +57,7 @@ public class PdfUtil {
         // pdf详细信息 目前先不用
         //PDFReader.getPDFInformation(pdfFilePath);
         //目录文件打印
-        //PDFReader.getPDFOutline(pdfFilePath);
+        PDFReader.getPDFOutline(pdfFilePath);
         //style 文件打印
         //PDFReader.getFontName(pdfFilePath, targetFilePath);
 
