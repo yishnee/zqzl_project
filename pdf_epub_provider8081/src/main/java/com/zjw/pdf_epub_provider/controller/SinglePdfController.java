@@ -4,10 +4,7 @@ import com.zjw.pdf_epub_provider.service.SingleEpubService;
 import com.zjw.pdf_epub_provider.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +17,7 @@ import java.net.URLEncoder;
  */
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping("/PdfToEpub")
 public class SinglePdfController {
 
@@ -46,7 +44,7 @@ public class SinglePdfController {
             e.printStackTrace();
         }
         log.info("用户："+username+"成功上传了文件："+pdfFile.getOriginalFilename());
-        return msg;
+        return "转换完成并保存在"+msg;
     }
 
     @PostMapping("/download/one")

@@ -1,15 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="/PdfToEpub/upload/one" enctype="multipart/form-data" method="post">
-    <input type="file" name="pdfFile" required><br>
-    <input type="username" name="username" required>输入用户名<br>
-    <input type="submit" value="上传单个文件">
-</form>
+    <meta charset="utf-8">
+    <title>pdf转epub</title>
+    <link href="./styles/sty.css" rel="stylesheet" type="text/css">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script>
+        var fileLength = 0;
+        function updateInfo() {
+            let formData = new FormData();
+            let username = $('#username')[0].value;
+            formData.append('username',username);
+            //console.log(pdfFile);console.log(username);
 
+            if (fileLength == 1){
+                formData.append('pdfFile',$('#pdfFile')[0].files[0]);
+                $.ajax({
+                    url: "http://localhost:8081/PdfToEpub/upload/one",
+                    type: "post",
+                    data: formData,
+                    header: "Access-Control-Allow-Origin",
+                    contentType: false, //必须
+                    processData: false, //必须
+                }).success(function (returnMsg) {
+                    //console.log(returnMsg);
+                    fileName.innerHTML = returnMsg;
+                }).error(function () {
+                    console.log("上传失败");
+                    fileName.innerHTML = "上传失败";
+                });
+            }else if (fileLength > 1){
+                for (let i = 0; i < fileLength; i++) {
+                    formData.append('uploadFiles',$('#pdfFile')[0].files[i]);
+                    //console.log($('#pdfFile')[0].files[i]);
+                }
+                $.ajax({
+                    url: "http://localhost:8081/PdfToEpub/upload/many",
+                    type: "post",
+                    data: formData,
+                    header: "Access-Control-Allow-Origin",
+                    contentType: false, //必须
+                    processData: false, //必须
+                }).success(function (returnMsg) {
+                    //console.log(returnMsg);
+                    fileName.innerHTML = returnMsg;
+                }).error(function () {
+                    console.log("上传失败");
+                    fileName.innerHTML = "上传失败";
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+<form enctype="multipart/form-data" method="post" id="userInfo" onsubmit="return false">
+    <div class="main-container full-height bg-light-gray">
+        <div class="main-content">
+            <div class="message-line ocr-warning"></div>
+            <div class="container">
+                <div class="content-area">
+                    <div class="page-title text-center">
+                        <h1>PDF到EPUB转换器</h1>
+                        <h2>在线转换您的pdf文件为epub文件</h2>
+                    </div>
+                    <div class="converter-container">
+                        <div class="converter-wrapper">
+                            <div class="converter-tabs ">
+                                <div class="ct-tab">文档转换器</div>
+                            </div>
+                            <div class="converter d-xl-flex justify-content-xl-center align-content-xl-start flex-xl-wrap">
+                                <div class="file-source-button-wrapper file-source-button-resizable">
+                                    <div class="file-source-button">
+                                        <label class="action-label" style="width: 400px; text-align: center" for="pdfFile">
+                                            <span id="fileName">选择文件</span>
+                                        </label>
+                                        <div class="menu-wrapper">
+                                            <div class="dropdown-menu file-source-nav">
+                                                <input type="file" id="pdfFile" name="pdfFile" class="file-input"
+                                                       onchange="fileLength = this.files.length;
+                                                                 var fileName = document.getElementById('fileName');
+                                                                 if (fileLength == 1) {
+                                                                     fileName.innerText=this.files[0].name;
+                                                                 }else if (fileLength > 1) {
+                                                                     fileName.innerHTML='';
+                                                                     for(let i = 0; i < this.files.length; i++) {
+                                                                         if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'、<br>';
+                                                                         else fileName.innerHTML+=this.files[i].name;
+                                                                     }
+                                                                 }"
+                                                       multiple required hidden>
+                                                <input type="text" name="username" id="username" value="Rui" hidden
+                                                       required/>
+                                                <button type="submit" class="btn btn-xl btn-primary"
+                                                        onclick="updateInfo()">
+                                                    转换
+                                                </button>
+                                                <div id="msg"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-source-caption d-none d-md-block"><span class="security-icon"
+                                                                                             data-placement="left"
+                                                                                             title="您的所有数据始终受到保护并在您的掌控中。在安全页面上了解有关我们采取的技术性和组织性安全措施的更多信息。"></span>
+                                        <span>放置文件在这里。100 MB为最大文件大小</span></div>
+                                </div>
+                                <div class="formats-wrapper" data-from-format="pdf" data-to-format="epub">
+                                    <div class="format-btn" data-toggle="dropdown" aria-haspopup="true"
+                                         aria-expanded="false" id="selectFormatFrom"><b>pdf</b></div>
+                                    <span>到</span>
+                                    <div class="format-btn" data-toggle="dropdown" aria-haspopup="true"
+                                         aria-expanded="false" id="selectFormatTo"><b>epub</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-wrapper">
+                        <div class="info-section">
+                            <div class="item">
+                                <p class="badge-wrapper"><span class="ui-badge f-document f-pdf is-large">pdf</span></p>
+                                <h3>可携式文件格式</h3>
+                                <div class="desc collapsible">
+                                    <div>PDF是一种由Adobe Systems使用某种语言功能PostScript设计的电子文件格式。是以Adobe
+                                        Reader这种格式查看文档的官方应用程序。大多数情况下，PDF文件是文本与光栅和矢量图形和文本格式、用JavaScript编写的脚本以及其他类型项目的组合。
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <p class="badge-wrapper"><span class="ui-badge f-ebook f-epub is-large">epub</span></p>
+                                <h3>电子出版物</h3>
+                                <div class="desc collapsible">
+                                    <div>
+                                        是由国际数字出版论坛制定的格式。它的特点是基于XML和XHTM为基础选择使用CSS样式。这种格式的主要特征是使用可回流文本（自动换行），这使得其能够让图像适应不同设备的显示器。ePub文件是扩展名为.epub的zip文档。
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="steps text-center">
+                        <h2>如何转换PDF到EPUB</h2>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="step-label">步骤1</div>
+                                    <div class="card-body">
+                                        <h3>上传pdf文件</h3>
+                                        <p>从计算机或在页面上拖拽选择文件</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="step-label">步骤2</div>
+                                    <div class="card-body">
+                                        <h3>转换成epub格式</h3>
+                                        <p>选择epub格式作为结果进行转换</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="step-label">步骤3</div>
+                                    <div class="card-body">
+                                        <h3>下载epub文件</h3>
+                                        <p>将转换好的epub文件下载到本地</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating text-center"></div><!--白色背景里的线-->
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-sitemap"></div><!--黑色框框里的线-->
+                <div class="footer-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-auto language-select-wrapper">
+                        </div>
+                        <div class="col copyright">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</form>
 </body>
 </html>
