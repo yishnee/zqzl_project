@@ -6,11 +6,12 @@
     <link href="./styles/sty.css" rel="stylesheet" type="text/css">
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
     <script>
-        var fileLength = 0;
-        function updateInfo() {
+        fileLength = 0;
+        var filePath;
+        function upLoad() {
+
             let formData = new FormData();
-            let username = $('#username')[0].value;
-            formData.append('username',username);
+            formData.append('username','Rui');
             //console.log(pdfFile);console.log(username);
 
             if (fileLength == 1){
@@ -24,10 +25,11 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = returnMsg;
-                }).error(function () {
-                    console.log("上传失败");
-                    fileName.innerHTML = "上传失败";
+                    fileName.innerHTML = "转换完成";
+                    filePath = returnMsg;
+                }).error(function (returnMsg) {
+                    console.log("上传失败"+returnMsg);
+                    fileName.innerHTML = "上传失败"+returnMsg;
                 });
             }else if (fileLength > 1){
                 for (let i = 0; i < fileLength; i++) {
@@ -43,12 +45,39 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = returnMsg;
-                }).error(function () {
-                    console.log("上传失败");
-                    fileName.innerHTML = "上传失败";
+                    fileName.innerHTML = "转换完成";
+                    filePath = returnMsg.split("\n");
+                    //console.log(filePath);
+                }).error(function (returnMsg) {
+                    console.log("上传失败"+returnMsg);
+                    fileName.innerHTML = "上传失败"+returnMsg;
                 });
             }
+
+            document.getElementById("download").removeAttribute('hidden');
+        }
+        
+        function downLoad() {
+
+            if (fileLength > 1) {
+                // 请求地址
+                var url = "http://localhost:8081/PdfToEpub/download/many";
+                // 分装form表单
+                var form = $("<form></form>").attr("action", url).attr("method", "post");
+                // 封装参数
+                form.append($("<input></input>").attr("type", "hidden").attr("name", "username").attr("value", "Rui"));
+                form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", filePath));
+                // 提交
+                form.appendTo('body').submit().remove();
+            }else {
+                var url = "http://localhost:8081/PdfToEpub/download/one";
+                var form = $("<form></form>").attr("action", url).attr("method", "post");
+                form.append($("<input></input>").attr("type", "hidden").attr("name", "username").attr("value", "Rui"));
+                form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", filePath));
+                form.appendTo('body').submit().remove();
+            }
+
+            $('#download').attr('hidden','hidden');
         }
     </script>
 </head>
@@ -75,35 +104,34 @@
                                         <label class="action-label" style="width: 400px; text-align: center" for="pdfFile">
                                             <span id="fileName">选择文件</span>
                                         </label>
-                                        <div class="menu-wrapper">
-                                            <div class="dropdown-menu file-source-nav">
-                                                <input type="file" id="pdfFile" name="pdfFile" class="file-input"
-                                                       onchange="fileLength = this.files.length;
-                                                                 var fileName = document.getElementById('fileName');
-                                                                 if (fileLength == 1) {
-                                                                     fileName.innerText=this.files[0].name;
-                                                                 }else if (fileLength > 1) {
-                                                                     fileName.innerHTML='';
-                                                                     for(let i = 0; i < this.files.length; i++) {
-                                                                         if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'、<br>';
-                                                                         else fileName.innerHTML+=this.files[i].name;
-                                                                     }
-                                                                 }"
-                                                       multiple required hidden>
-                                                <input type="text" name="username" id="username" value="Rui" hidden
-                                                       required/>
-                                                <button type="submit" class="btn btn-xl btn-primary"
-                                                        onclick="updateInfo()">
-                                                    转换
-                                                </button>
-                                                <div id="msg"></div>
-                                            </div>
+                                        <div class="file-source-nav">
+                                            <input type="file" id="pdfFile" name="pdfFile" class="file-input"
+                                                   onchange="fileLength = this.files.length;
+                                                             fileName = document.getElementById('fileName');
+                                                             if (fileLength == 1) {
+                                                                 fileName.innerText=this.files[0].name;
+                                                             }else if (fileLength > 1) {
+                                                                 fileName.innerHTML='';
+                                                                 for(let i = 0; i < this.files.length; i++) {
+                                                                     if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'、<br>';
+                                                                     else fileName.innerHTML+=this.files[i].name;
+                                                                 }
+                                                             }"
+                                                   multiple required hidden>
+                                            <button id="upload" type="submit" class="btn btn-xl btn-primary"
+                                                    onclick="upLoad()">
+                                                转换
+                                            </button>
+                                            <button id="download" type="submit" class="btn btn-xl btn-primary"
+                                                    onclick="downLoad()" hidden>
+                                                下载
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="file-source-caption d-none d-md-block"><span class="security-icon"
                                                                                              data-placement="left"
                                                                                              title="您的所有数据始终受到保护并在您的掌控中。在安全页面上了解有关我们采取的技术性和组织性安全措施的更多信息。"></span>
-                                        <span>放置文件在这里。100 MB为最大文件大小</span></div>
+                                        <span>放置文件在这里。100 MB为最大文件大小。想要上传多个文件请按住ctrl，再进行选择。</span></div>
                                 </div>
                                 <div class="formats-wrapper" data-from-format="pdf" data-to-format="epub">
                                     <div class="format-btn" data-toggle="dropdown" aria-haspopup="true"
@@ -115,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="info-wrapper">
+                    <!--<div class="info-wrapper">
                         <div class="info-section">
                             <div class="item">
                                 <p class="badge-wrapper"><span class="ui-badge f-document f-pdf is-large">pdf</span></p>
@@ -138,7 +166,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="steps text-center">
                         <h2>如何转换PDF到EPUB</h2>
                         <div class="row">

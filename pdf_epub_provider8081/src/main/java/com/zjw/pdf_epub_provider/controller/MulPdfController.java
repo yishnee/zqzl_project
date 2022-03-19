@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 
 /**
  *  作者： Zzr
@@ -37,7 +39,7 @@ public class MulPdfController {
             return msg;
         }
         log.info("用户："+username+"成功批量上传了"+uploadFiles.length+"个文件："+showUploadFilesName(uploadFiles));
-        return "转换完成并保存在"+msg;
+        return msg;
     }
 
     public String showUploadFilesName(MultipartFile[] uploadFiles) {
@@ -48,6 +50,5 @@ public class MulPdfController {
         }
         return uploadFilesName;
     }
-
 
 }
