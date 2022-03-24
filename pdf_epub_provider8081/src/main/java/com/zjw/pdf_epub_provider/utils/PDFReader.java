@@ -63,7 +63,7 @@ public class PDFReader {
             //获取第一个纲要条目（标题1）
             PDOutlineItem item = outline.getFirstChild();
 
-            String sss = new String();
+            String sss = "";
 
             if (outline != null) {
                 //遍历每一个标题1
@@ -152,15 +152,17 @@ public class PDFReader {
                 BufferedWriter out = new BufferedWriter(new FileWriter("catalog.txt"));
                 out.write(sss);
                 out.close();
-                System.out.println("catalog.txt创建成功！");
+                //System.out.println("catalog.txt创建成功！");
+                log.info("catalog.txt创建成功！");
             } catch (IOException e) {
+                log.error("PDFReader: getPDFOutline: catalog目录获取失败！");
             }
 
             //关闭输入流
             document.close();
             fis.close();
-        } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
+            log.error("PDFReader: getPDFOutline出错!");
         }
     }
 
@@ -194,8 +196,8 @@ public class PDFReader {
             //关闭输入流
             document.close();
             fis.close();
-        } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
+            log.error("PDFReader: getPDFCatalog出错!");
         }
     }
 
@@ -205,7 +207,7 @@ public class PDFReader {
      *
      * @param file           PDF路径
      * @param targetFilePath 生成style.txt路径, 目前使用项目路径
-     *                                                                   TODO 路径修改成static
+     *                                                                                                               TODO 路径修改成static
      */
     public static void getFontName(String file, String targetFilePath) {
         log.info("获取文件内容加上字体大小");
@@ -253,6 +255,7 @@ public class PDFReader {
                 out.close();
                 System.out.println("style.html创建成功！");
             } catch (IOException e) {
+                log.error("PDFReader: getFontName出错！");
             }
 
             //TODO

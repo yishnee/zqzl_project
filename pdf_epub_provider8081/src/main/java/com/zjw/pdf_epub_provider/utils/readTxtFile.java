@@ -1,5 +1,7 @@
 package com.zjw.pdf_epub_provider.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.Reader;
  * @author yishnee
  * @version 1.0
  */
+@Slf4j
 public class readTxtFile {
     public static void readTxtFile(String filePath){
         try {
@@ -28,10 +31,12 @@ public class readTxtFile {
                 }
                 read.close();
             }else{
-                System.out.println("找不到指定的文件");
+                //System.out.println("找不到指定的文件");
+                log.error("readTxtFile: 找不到指定的文件");
             }
         } catch (Exception e) {
-            System.out.println("读取文件内容出错");
+            //System.out.println("读取文件内容出错");
+            log.error("readTxtFile: 读取文件内容出错");
             e.printStackTrace();
         }
 
