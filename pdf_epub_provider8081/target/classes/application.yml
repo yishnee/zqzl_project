@@ -33,3 +33,8 @@ com:
     PdfPath: D:\data\pdf\Test\PdfTotal
     HtmlPath: D:\data\pdf\Test\HtmlTotal
     TxtPath: D:\data\pdf\Test\TxtTotal
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    com.zjw.pdf_epub_provider.dao: trace
+

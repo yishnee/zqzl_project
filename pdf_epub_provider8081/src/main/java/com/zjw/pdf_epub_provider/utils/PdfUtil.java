@@ -52,12 +52,16 @@ public class PdfUtil {
         doc.loadFromFile(pdfFilePath);
 
         //TODO 文件读取配置
+
         //读取pdf相关信息
         //PDFReader.getPDFCatalog(pdfFilePath);
+
         // pdf详细信息 目前先不用
         //PDFReader.getPDFInformation(pdfFilePath);
+
         //目录文件打印
         PDFReader.getPDFOutline(pdfFilePath);
+
         //style 文件打印
         //PDFReader.getFontName(pdfFilePath, targetFilePath);
 

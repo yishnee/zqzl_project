@@ -33,7 +33,7 @@ public class MulPdfController {
         try {
             msg=mulEpubService.MergePdfToEpub(uploadFiles,username);
         } catch (IOException e) {
-            log.error("无法创建上传的文件！");
+            log.error("多文件无法创建上传的文件！");
             msg="error";
             e.printStackTrace();
             return msg;

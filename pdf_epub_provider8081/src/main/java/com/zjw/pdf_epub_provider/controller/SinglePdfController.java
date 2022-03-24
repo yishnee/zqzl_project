@@ -39,7 +39,7 @@ public class SinglePdfController {
         try {
             msg=singleEpubService.pdfToEpub_Single(pdfFile,username);
         } catch (IOException e) {
-            log.error("无法创建上传的文件！");
+            log.error("单文件无法创建上传的文件！");
             msg="error";
             e.printStackTrace();
         }
