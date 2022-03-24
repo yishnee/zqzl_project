@@ -4,10 +4,24 @@
     <meta charset="utf-8">
     <title>pdf转epub</title>
     <link href="./styles/sty.css" rel="stylesheet" type="text/css">
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <style>
+        .ui-progressbar {
+            position: relative;
+        }
+        .progress-label {
+            position: absolute;
+            left: 50%;
+            top: -4px;
+            font-size: 2px;
+            text-shadow: 1px 1px 0 #fff;
+        }
+    </style>
     <script>
         var fileLength = 0, filePath;
-        var time1, j = 0;
+        var time1, time2, j = 0;
 
         function upLoad() {
 
@@ -26,13 +40,13 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = "转换完成";
-                    document.getElementById("download").removeAttribute('hidden');
                     filePath = returnMsg;
+                    progressbar.progressbar( "value", 100 );
                 }).error(function (returnMsg) {
                     console.log("上传失败" + returnMsg);
                     fileName.innerHTML = "上传失败，请重新选择转换文件";
                     document.getElementById("upload").removeAttribute('hidden');
+                    $('#progressbar').attr('hidden', 'hidden');
                 });
             } else if (fileLength > 1) {
                 for (let i = 0; i < fileLength; i++) {
@@ -48,14 +62,14 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = "转换完成";
-                    document.getElementById("download").removeAttribute('hidden');
                     filePath = returnMsg.split("\n");
                     //console.log(filePath);
+                    progressbar.progressbar( "value", 100 );
                 }).error(function (returnMsg) {
                     console.log("上传失败" + returnMsg);
                     fileName.innerHTML = "上传失败，请重新选择转换文件";
                     document.getElementById("upload").removeAttribute('hidden');
+                    $('#progressbar').attr('hidden', 'hidden');
                 });
             } else {
                 fileName.innerHTML = "请选择转换文件";
@@ -63,11 +77,42 @@
             }
 
             $('#upload').attr('hidden', 'hidden');
-            fileName.innerHTML = "转换中Loading......";
+            document.getElementById("progressbar").removeAttribute('hidden');
 
             //重置file的outerHTML，确保input中没有文件存在，再开始下一次文件转换。
             var file = document.getElementById('pdfFile');
             file.outerHTML = file.outerHTML;
+
+            //进度条
+            var progressbar = $( "#progressbar" );
+
+            progressbar.progressbar({
+                value: false,
+                change: function() {
+                    //progressLabel.text( progressbar.progressbar( "value" ) + "%" );
+                    fileName.innerHTML = "转换中Loading......" + progressbar.progressbar( "value" ) + "%";
+                },
+                complete: function (){
+                    setTimeout(function() {
+                        //progressLabel.text( "完成！" );
+                        $('#progressbar').attr('hidden', 'hidden');
+                        fileName.innerHTML = "转换完成";
+                    },1000);
+                    document.getElementById("download").removeAttribute('hidden');
+                }
+            });
+            function progress() {
+                var val = progressbar.progressbar( "value" ) || 0;
+
+                progressbar.progressbar( "value", val + 1 );
+
+                if ( val < 99 ) {
+                    time2 = setTimeout( progress, 500 );
+                }else {
+                    clearTimeout(time2);
+                }
+            }
+            progress();
         }
 
         function downLoad() {
@@ -116,6 +161,7 @@
                     <h1>PDF到EPUB转换器</h1>
                     <h2>在线转换您的pdf文件为epub文件</h2>
                 </div>
+                <div id="progressbar" style="height: 10px;" hidden></div>
                 <div class="converter-container">
                     <div class="converter-wrapper">
                         <div class="converter-tabs ">
