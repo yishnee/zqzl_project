@@ -57,4 +57,3 @@
         <appender-ref ref="rollingFile" />
     </root>
 </configuration>
-<!--        #这里将生成的日志文件保存到 /Users/xxx/Desktop/log/-->
