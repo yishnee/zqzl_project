@@ -2,12 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>pdf转epub</title>
-    <link href="./styles/sty.css" rel="stylesheet" type="text/css">
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <title>PDF_To_EPUB</title>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./styles/sty.css">
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script async src="https://hosted.okayanalytics.com/tracker.js?tid=OA-LMAM3Y07"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/b11.css">
+    <link rel="stylesheet" href="./styles/b12.css">
     <script>
         var fileLength = 0, filePath;
-        var time1, j = 0;
+        var time1, time2, j = 0;
 
         function upLoad() {
 
@@ -26,13 +32,13 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = "转换完成";
-                    document.getElementById("download").removeAttribute('hidden');
                     filePath = returnMsg;
+                    progressbar.progressbar("value", 100);
                 }).error(function (returnMsg) {
                     console.log("上传失败" + returnMsg);
                     fileName.innerHTML = "上传失败，请重新选择转换文件";
                     document.getElementById("upload").removeAttribute('hidden');
+                    $('#progressbar').attr('hidden', 'hidden');
                 });
             } else if (fileLength > 1) {
                 for (let i = 0; i < fileLength; i++) {
@@ -48,14 +54,14 @@
                     processData: false, //必须
                 }).success(function (returnMsg) {
                     //console.log(returnMsg);
-                    fileName.innerHTML = "转换完成";
-                    document.getElementById("download").removeAttribute('hidden');
                     filePath = returnMsg.split("\n");
                     //console.log(filePath);
+                    progressbar.progressbar("value", 100);
                 }).error(function (returnMsg) {
                     console.log("上传失败" + returnMsg);
                     fileName.innerHTML = "上传失败，请重新选择转换文件";
                     document.getElementById("upload").removeAttribute('hidden');
+                    $('#progressbar').attr('hidden', 'hidden');
                 });
             } else {
                 fileName.innerHTML = "请选择转换文件";
@@ -63,11 +69,44 @@
             }
 
             $('#upload').attr('hidden', 'hidden');
-            fileName.innerHTML = "转换中Loading......";
+            document.getElementById("progressbar").removeAttribute('hidden');
 
             //重置file的outerHTML，确保input中没有文件存在，再开始下一次文件转换。
             var file = document.getElementById('pdfFile');
             file.outerHTML = file.outerHTML;
+
+            //进度条
+            var progressbar = $("#progressbar");
+
+            progressbar.progressbar({
+                value: false,
+                change: function () {
+                    //progressLabel.text( progressbar.progressbar( "value" ) + "%" );
+                    fileName.innerHTML = "转换中Loading......" + progressbar.progressbar("value") + "%";
+                },
+                complete: function () {
+                    setTimeout(function () {
+                        //progressLabel.text( "完成！" );
+                        $('#progressbar').attr('hidden', 'hidden');
+                        fileName.innerHTML = "转换完成";
+                    }, 1000);
+                    document.getElementById("download").removeAttribute('hidden');
+                }
+            });
+
+            function progress() {
+                var val = progressbar.progressbar("value") || 0;
+
+                progressbar.progressbar("value", val + 1);
+
+                if (val < 99) {
+                    time2 = setTimeout(progress, 500);
+                } else {
+                    clearTimeout(time2);
+                }
+            }
+
+            progress();
         }
 
         function downLoad() {
@@ -107,7 +146,7 @@
 </head>
 
 <body>
-<div class="main-container full-height bg-light-gray">
+<!--<div class="main-container full-height bg-light-gray">
     <div class="main-content">
         <div class="message-line ocr-warning"></div>
         <div class="container">
@@ -116,6 +155,7 @@
                     <h1>PDF到EPUB转换器</h1>
                     <h2>在线转换您的pdf文件为epub文件</h2>
                 </div>
+                <div id="progressbar" style="height: 10px;" hidden></div>
                 <div class="converter-container">
                     <div class="converter-wrapper">
                         <div class="converter-tabs ">
@@ -166,79 +206,131 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="info-wrapper">
-                    <div class="info-section">
-                        <div class="item">
-                            <p class="badge-wrapper"><span class="ui-badge f-document f-pdf is-large">pdf</span></p>
-                            <h3>可携式文件格式</h3>
-                            <div class="desc collapsible">
-                                <div>PDF是一种由Adobe Systems使用某种语言功能PostScript设计的电子文件格式。是以Adobe
-                                    Reader这种格式查看文档的官方应用程序。大多数情况下，PDF文件是文本与光栅和矢量图形和文本格式、用JavaScript编写的脚本以及其他类型项目的组合。
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="item">
-                            <p class="badge-wrapper"><span class="ui-badge f-ebook f-epub is-large">epub</span></p>
-                            <h3>电子出版物</h3>
-                            <div class="desc collapsible">
-                                <div>
-                                    是由国际数字出版论坛制定的格式。它的特点是基于XML和XHTM为基础选择使用CSS样式。这种格式的主要特征是使用可回流文本（自动换行），这使得其能够让图像适应不同设备的显示器。ePub文件是扩展名为.epub的zip文档。
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="steps text-center">
-                    <h2>如何转换PDF到EPUB</h2>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="step-label">步骤1</div>
-                                <div class="card-body">
-                                    <h3>上传pdf文件</h3>
-                                    <p>从计算机或在页面上拖拽选择文件</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="step-label">步骤2</div>
-                                <div class="card-body">
-                                    <h3>转换成epub格式</h3>
-                                    <p>选择epub格式作为结果进行转换</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="step-label">步骤3</div>
-                                <div class="card-body">
-                                    <h3>下载epub文件</h3>
-                                    <p>将转换好的epub文件下载到本地</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="rating text-center"></div><!--白色背景里的线-->
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-sitemap"></div><!--黑色框框里的线-->
-            <div class="footer-bottom">
-                <div class="row align-items-center">
-                    <div class="col-md-auto language-select-wrapper">
-                    </div>
-                    <div class="col copyright">
-                    </div>
+</div>-->
+<section class="content" role="document">
+    <main class="main">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">PDF TO EPUB</h1>
+                <p class="hero-description">We make great pdf-to-epub converter</p>
+                <a class="hero-button" href="#who">Start the conversion</a>
+            </div>
+            <div class="hero-illustrations">
+                <object type="image/svg+xml" data="images/illustrations/webpage.svg" class="illustration-webpage">
+                    Webpage
+                </object>
+                <object type="image/svg+xml" data="images/illustrations/team.svg" class="illustration-team">
+                    Team
+                </object>
+                <object type="image/svg+xml" data="images/illustrations/pen.svg" class="illustration-pen">
+                    Pen
+                </object>
+            </div>
+        </section>
+
+        <section id="who" class="contact">
+            <div class="contact-wrapper">
+                <div class="contact-content">
+                    <label class="action-label" style="width: 400px; text-align: center" for="pdfFile">
+                        <h3 id="fileName" class="contact-title">点击此处选择文件</h3>
+                    </label>
+                    <input type="file" id="pdfFile" name="pdfFile" class="file-input"
+                           onchange="fileLength = this.files.length;
+                             var fileName = document.getElementById('fileName');
+                             if (fileLength == 1) {
+                                 fileName.innerText=this.files[0].name;
+                             }else if (fileLength > 1) {
+                                 fileName.innerHTML='';
+                                 for(let i = 0; i < this.files.length; i++) {
+                                     if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'、<br>';
+                                     else fileName.innerHTML+=this.files[i].name;
+                                 }
+                             }"
+                           multiple required hidden>
+                    <button class="button" id="upload" type="submit" onclick="upLoad()">
+                        <div class="inner">
+                            <div class="zipper">
+                                <div class="line"></div>
+                                <div class="gradient"></div>
+                            </div>
+                            <span>上传文件</span>
+                            <svg viewBox="0 0 20 16">
+                                <polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <button id="download" type="submit" class="btn btn-xl btn-primary"
+                            onclick="downLoad()" hidden>
+                        下载
+                    </button>
+                    <script>
+                        if (fileLength != 0) {
+                            document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
+                                if (!button.classList.contains('compress')) {
+
+                                    button.classList.add('compress');
+
+                                    setTimeout(() => button.classList.remove('compress'), 4000);
+
+                                }
+                                e.preventDefault();
+                            }));
+                        }
+                    </script>
                 </div>
             </div>
-        </div>
-    </footer>
-</div>
+            <div class="footer-illustrations">
+                <object type="image/svg+xml" data="images/illustrations/balloon.svg" class="illustration-balloon">
+                    Balloon
+                </object>
+            </div>
+        </section>
+    </main>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+    $('a[href*="#"]:not([href="#"])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+            || location.hostname == this.hostname) {
+
+            history.pushState('', this.hash, "" + this.hash);
+
+            var target = $(this.hash),
+
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+
+            if (target.length) {
+                $('html,body').animate({
+                    scrollTop: target.offset().top,
+                }, 400);
+                return false;
+            }
+        }
+    });
+
+    var $window = $(window);
+    var $elem = $("#who");
+
+    function isScrolledIntoView($elem, $window) {
+        var docViewTop = $window.scrollTop();
+        var docViewBottom = docViewTop + $window.height();
+
+        var elemTop = $elem.offset().top;
+        var elemBottom = elemTop + $elem.height();
+
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+
+    $(document).on("scroll", function () {
+        if (isScrolledIntoView($elem, $window)) {
+            $elem.addClass("animate")
+        }
+    });
+</script>
 </body>
 </html>
