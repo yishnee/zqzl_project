@@ -1,0 +1,18 @@
+.upload_border {
+    padding: 15px;
+    background-color: #e8e8e8;
+}
+
+#uploader {
+    width: 100% !important;
+    background-color: #fff;
+}
+
+.ajax-upload {
+    border: 1px dashed #5f69a3;
+    width: 100%;
+    color: #DADCE3;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 10px 0px 10px;
+}

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/b11.css">
     <link rel="stylesheet" href="./styles/b12.css">
+    <link rel="stylesheet" href="./styles/uploadFile.css">
     <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
     <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -30,14 +31,21 @@
                     header: "Access-Control-Allow-Origin",
                     contentType: false, //必须
                     processData: false, //必须
-                    success:(function (returnMsg) {
+                    success: (function (returnMsg) {
                         //console.log(returnMsg);
                         filePath = returnMsg;
+                        setTimeout(function () {
+                            //progressLabel.text( "完成！" );
+                            $('#progressbar').attr('hidden', 'hidden');
+                            fileName.innerHTML = "转换完成";
+                            setTimeout(() => document.getElementById("download").removeAttribute('hidden'), 2200);
+                        }, 1000);
                         progressbar.progressbar("value", 99);
                     }),
-                    error:(function (returnMsg) {
+                    error: (function (returnMsg) {
                         console.log("上传失败" + returnMsg);
-                        fileName.innerHTML = "上传失败，请重新选择转换文件";
+                        progressbar.progressbar("value", 100);
+                        fileName.innerHTML = "上传失败，请重新单击此处选择转换文件";
                         document.getElementById("upload").removeAttribute('hidden');
                         $('#progressbar').attr('hidden', 'hidden');
                     })
@@ -54,27 +62,33 @@
                     header: "Access-Control-Allow-Origin",
                     contentType: false, //必须
                     processData: false, //必须
-                    success:(function (returnMsg) {
+                    success: (function (returnMsg) {
                         //console.log(returnMsg);
                         filePath = returnMsg.split("\n");
                         //console.log(filePath);
+                        setTimeout(function () {
+                            $('#progressbar').attr('hidden', 'hidden');
+                            fileName.innerHTML = "转换完成";
+                            setTimeout(() => document.getElementById("download").removeAttribute('hidden'), 2000);
+                        }, 1000);
                         progressbar.progressbar("value", 99);
                     }),
-                    error:(function (returnMsg) {
+                    error: (function (returnMsg) {
                         console.log("上传失败" + returnMsg);
-                        fileName.innerHTML = "上传失败，请重新选择转换文件";
+                        progressbar.progressbar("value", 100);
+                        fileName.innerHTML = "上传失败，请重新单击此处选择转换文件";
                         document.getElementById("upload").removeAttribute('hidden');
                         $('#progressbar').attr('hidden', 'hidden');
                     }),
                 });
             } else {
-                fileName.innerHTML = "请选择转换文件";
+                fileName.innerHTML = "请单击此处选择转换文件";
                 return;
             }
 
             setTimeout(function () {
                 $('#upload').attr('hidden', 'hidden');
-            },4000);
+            }, 4000);
             document.getElementById("progressbar").removeAttribute('hidden');
 
             //重置file的outerHTML，确保input中没有文件存在，再开始下一次文件转换。
@@ -91,12 +105,7 @@
                     fileName.innerHTML = "转换中Loading......" + progressbar.progressbar("value") + "%";
                 },
                 complete: function () {
-                    setTimeout(function () {
-                        //progressLabel.text( "完成！" );
-                        $('#progressbar').attr('hidden', 'hidden');
-                        fileName.innerHTML = "转换完成";
-                        setTimeout(()=> document.getElementById("download").removeAttribute('hidden'),1000);
-                    }, 1000);
+                    //progressLabel.text( "完成！" );
                 }
             });
 
@@ -113,6 +122,7 @@
             }
 
             progress();
+
         }
 
         function downLoad() {
@@ -147,8 +157,8 @@
             setTimeout(function () {
                 $('#download').attr('hidden', 'hidden');
                 document.getElementById("upload").removeAttribute('hidden');
-                fileName.innerHTML = "选择文件";
-            },4000);
+                fileName.innerHTML = "单击此处选择文件📄";
+            }, 4000);
         }
     </script>
 </head>
@@ -159,7 +169,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1 class="hero-title">PDF TO EPUB</h1>
-                <p class="hero-description">We make great pdf-to-epub converter</p>
+                <p class="hero-description">We make pdf-to-epub converter</p>
                 <a class="hero-button" href="#who">Start the conversion</a>
             </div>
             <div class="hero-illustrations">
@@ -180,59 +190,69 @@
         <section id="who" class="contact">
             <div class="contact-wrapper">
                 <div class="contact-content" style="text-align: left">
-                    <h3 class="contact-title" style="margin-left: 100px; margin-bottom: 10px;">👇</h3>
-                    <label class="action-label" for="pdfFile">
-                        <h3 id="fileName" class="contact-title">点击此处选择文件📄</h3>
-                    </label>
-                    <input type="file" id="pdfFile" name="pdfFile" class="file-input"
-                           onchange="fileLength = this.files.length;
-                             var fileName = document.getElementById('fileName');
-                             if (fileLength == 1) {
-                                 fileName.innerText=this.files[0].name;
-                             }else if (fileLength > 1) {
-                                 fileName.innerHTML='';
-                                 for(let i = 0; i < this.files.length; i++) {
-                                     if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'<br>';
-                                     else fileName.innerHTML+=this.files[i].name;
-                                 }
-                             }"
-                           multiple required hidden>
-                    <button class="button" id="upload" type="submit" onclick="upLoad()">
-                        <div class="inner">
-                            <div class="zipper">
-                                <div class="line"></div>
-                                <div class="gradient"></div>
-                            </div>
-                            <span>上传文件</span>
-                            <svg viewBox="0 0 20 16">
-                                <polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <button class="button" id="download" type="submit" onclick="downLoad()" hidden>
-                        <div class="inner">
-                            <div class="zipper">
-                                <div class="line"></div>
-                                <div class="gradient"></div>
-                            </div>
-                            <span>下载文件</span>
-                            <svg viewBox="0 0 20 16">
-                                <polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <script>
-                        document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
-                            if (!button.classList.contains('compress') && fileLength > 0) {
+                    <div class="upload_border">
+                        <div id="uploader">
+                            <div class="ajax-upload">
+                                <h3 class="contact-title" style="margin-top: 50px; margin-bottom: 10px;">👇</h3>
+                                <label class="action-label" for="pdfFile">
+                                    <h3 id="fileName" class="contact-title">单击此处选择文件📄</h3>
+                                </label>
+                                <input type="file" id="pdfFile" name="pdfFile" class="file-input"
+                                       onchange="fileLength = this.files.length;
+                                                var fileName = document.getElementById('fileName');
+                                                    if (fileLength == 1) {
+                                                    fileName.innerText=this.files[0].name;
+                                                }else if (fileLength > 1) {
+                                                    fileName.innerHTML='';
+                                                    for(let i = 0; i < this.files.length; i++) {
+                                                        if (i!=fileLength-1) fileName.innerHTML+=this.files[i].name+'<br>';
+                                                        else fileName.innerHTML+=this.files[i].name;
+                                                    }
+                                                }"
+                                       multiple required hidden>
+                                <div style="display: flex; justify-content: center; margin-bottom: 50px;">
+                                    <button class="button" id="upload" type="submit" onclick="upLoad()">
+                                        <div class="inner">
+                                            <div class="zipper">
+                                                <div class="line"></div>
+                                                <div class="gradient"></div>
+                                            </div>
+                                            <span>上传文件</span>
+                                            <svg viewBox="0 0 20 16">
+                                                <polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
+                                            </svg>
+                                        </div>
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="button" id="download" type="submit" onclick="downLoad()" hidden>
+                                        <div class="inner">
+                                            <div class="zipper">
+                                                <div class="line"></div>
+                                                <div class="gradient"></div>
+                                            </div>
+                                            <span>下载文件</span>
+                                            <svg viewBox="0 0 20 16">
+                                                <polyline points="3 8.75 7.75 13.5 17 2.5"></polyline>
+                                            </svg>
+                                        </div>
+                                    </button>
+                                    <script>
+                                        document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
+                                            if (!button.classList.contains('compress') && fileLength > 0) {
 
-                                button.classList.add('compress');
+                                                button.classList.add('compress');
 
-                                setTimeout(() => button.classList.remove('compress'), 4000);
+                                                setTimeout(() => button.classList.remove('compress'), 4000);
 
-                            }
-                            e.preventDefault();
-                        }));
-                    </script>
+                                            }
+                                            e.preventDefault();
+                                        }));
+                                    </script>
+
+                                </div><!--button_div_end-->
+                            </div><!--ajax-upload_div_end-->
+                        </div><!--uploader_div_end-->
+                    </div><!--upload-border_div_end-->
                 </div>
             </div>
             <div class="footer-illustrations">

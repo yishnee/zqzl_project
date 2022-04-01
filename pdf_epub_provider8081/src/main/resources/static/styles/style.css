@@ -132,7 +132,7 @@ section.hero {
 section.hero .hero-content {
     position: absolute;
     top: 10rem;
-    left: 40%;
+    left: 50%;
     -webkit-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
@@ -492,7 +492,7 @@ section.contact {
     }
 }
 section.contact .contact-content {
-    max-width: 1000px;
+    max-width: 700px;
     padding: 0 30px;
     margin: 0 auto;
 }
