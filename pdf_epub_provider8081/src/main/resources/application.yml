@@ -33,6 +33,12 @@ com:
     PdfPath: D:\data\pdf\Test\PdfTotal
     HtmlPath: D:\data\pdf\Test\HtmlTotal
     TxtPath: D:\data\pdf\Test\TxtTotal
+
+#    LinuxPath: ----------------------xml记得修改Linux位置
+#    EpubPath: /tmp/pdf2epub/EpubTotal
+#    PdfPath: /tmp/pdf2epub/PdfTotal
+#    HtmlPath: /tmp/pdf2epub/HtmlTotal
+#    TxtPath: /tmp/pdf2epub/TxtTotal
 logging:
   config: classpath:logback-spring.xml
   level:
