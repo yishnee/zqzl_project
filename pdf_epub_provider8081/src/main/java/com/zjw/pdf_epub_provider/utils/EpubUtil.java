@@ -46,7 +46,7 @@ public class EpubUtil {
             }
             Collections.sort(middle);
             for (Integer integer : middle) {
-                fileNameArr.add(filePath + "\\" + integer.toString() + ".html");
+                fileNameArr.add(filePath + "/" + integer.toString() + ".html");
             }
 
             for (String s : fileNameArr) {
@@ -111,7 +111,7 @@ public class EpubUtil {
                 String fileName = fileNameArr.get(i);
                 //System.out.println(fileName);
                 String pageNum = "Page:" + i;
-                String pageName = fileName.substring(fileName.lastIndexOf("\\")+1);
+                String pageName = fileName.substring(fileName.lastIndexOf("/")+1);
                 //System.out.println(pageName);
                 int flag=0,first=-1;
                 for(int j=0;j<strindex;j++) {
