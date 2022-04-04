@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8085
   tomcat:
     max-swallow-size: 100MB
 spring:
@@ -12,6 +12,10 @@ spring:
       url: jdbc:mysql://47.97.7.63:3306/conveter?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: zqzl
       password: zqzl123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   jpa:
     database: mysql
     show-sql: false  #展示SQL语句
