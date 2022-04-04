@@ -25,7 +25,9 @@
             if (fileLength == 1) {
                 formData.append('pdfFile', $('#pdfFile')[0].files[0]);
                 $.ajax({
-                    url: "http://47.97.7.63:10010/PdfToEpub/upload/one",
+                    url: "http://localhost:8084/PdfToEpub/upload/one",//单机版
+                    //url: "http://47.97.7.63:8084/PdfToEpub/upload/one",//单体服务器版
+                    // url: "http://47.97.7.63:10010/PdfToEpub/upload/one",//分布式版
                     type: "post",
                     data: formData,
                     header: "Access-Control-Allow-Origin",
@@ -56,7 +58,9 @@
                     //console.log($('#pdfFile')[0].files[i]);
                 }
                 $.ajax({
-                    url: "http://47.97.7.63:10010/PdfToEpub/upload/many",
+                    url: "http://localhost:8084/PdfToEpub/upload/many",//单机版
+                    // url: "http://47.97.7.63:8084/PdfToEpub/upload/many",//单体服务器版
+                    // url: "http://47.97.7.63:10010/PdfToEpub/upload/many",//分布式版
                     type: "post",
                     data: formData,
                     header: "Access-Control-Allow-Origin",
@@ -129,7 +133,9 @@
 
             if (fileLength > 1) {
                 // 请求地址
-                var url = "http://47.97.7.63:8085/PdfToEpub/download/one";
+                var url = "http://localhost:8084/PdfToEpub/download/one";//单机版
+                // var url = "http://47.97.7.63:8084/PdfToEpub/download/one";//单体服务器版
+                // var url = "http://47.97.7.63:8085/PdfToEpub/download/one";//分布式版
                 // 分装form表单
                 var form = $("<form></form>").attr("action", url).attr("method", "post");
                 // 封装参数
@@ -138,7 +144,9 @@
                 // 提交
                 form.appendTo('body').submit().remove();
             } else if (fileLength == 1) {
-                var url = "http://47.97.7.63:8085/PdfToEpub/download/one";
+                var url = "http://localhost:8084/PdfToEpub/download/one";//单机版
+                // var url = "http://47.97.7.63:8084/PdfToEpub/download/one";//单体服务器版
+                // var url = "http://47.97.7.63:8085/PdfToEpub/download/one";//分布式版
                 var form = $("<form></form>").attr("action", url).attr("method", "post");
                 form.append($("<input></input>").attr("type", "hidden").attr("name", "username").attr("value", "Rui"));
                 form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", filePath));
