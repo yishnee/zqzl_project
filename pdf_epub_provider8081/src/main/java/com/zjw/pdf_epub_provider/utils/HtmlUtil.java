@@ -36,7 +36,7 @@ public class HtmlUtil {
             if (m.find()) {
                 str = str.replaceAll(m.group(),"preserveAspectRatio=\"xMinYMin meet\"");
             }
-            str = str.replaceAll("<svg","<svg viewbox=\"0 0 1200 1200\"");
+            str = str.replaceAll("<svg","<svg viewbox=\"0 0 800 1130\"");
             str = str.replaceAll("Evaluation Warning : The document was created with Spire.PDF for java.","");
             str = str.replaceAll("Evaluation Warning : The document was created with Spire.PDF for Java.","");
             File file = new File(htmlFilePath);
