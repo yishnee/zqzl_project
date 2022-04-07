@@ -48,7 +48,7 @@ public class MulEpubServiceImpl implements MulEpubService {
             mergePdf.addSource(file.getInputStream());
         }*/
         //获取用户专属的pdf文件夹，若为新用户则创建文件夹
-        File userFile = new File(pdfTotal.getPdfPath() + "\\" + user.getUsername());
+        File userFile = new File(pdfTotal.getPdfPath() + "/" + user.getUsername());
         if(!userFile.exists()){
             userFile.mkdir();
         }

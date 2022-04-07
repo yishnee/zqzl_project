@@ -59,7 +59,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         Integer times = user.getUseTimes();
         times++;
         //获取用户专属的pdf文件夹，若为新用户则创建文件夹
-        File savaSplitPathFile = new File(pathTotal.getPdfPath() + "\\" + user.getUsername() + "\\" + times);
+        File savaSplitPathFile = new File(pathTotal.getPdfPath() + "/" + user.getUsername() + "/" + times);
         if (!savaSplitPathFile.exists()) {
             savaSplitPathFile.mkdirs();
         }
@@ -72,7 +72,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //将用户上传的pdf放入相应文件夹中
         log.info("用户上传的pdf放入相应文件夹中...");
         byte[] uploadFileBytes = uploadFile.getBytes();
-        File upFile = new File(pathTotal.getPdfPath() + "\\" + user.getUsername() + "\\" + uploadFile.getOriginalFilename());
+        File upFile = new File(pathTotal.getPdfPath() + "/" + user.getUsername() + "/" + uploadFile.getOriginalFilename());
         if (!upFile.exists()) {
             upFile.createNewFile();
         }
@@ -122,12 +122,12 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //获取pdf分离之后的路径(需要转换的pdf文件集合的路径)
         String splitPdfPath = pdfInfo.getSplitPath();
         //获得HtmlTotal文件下该用户专属的Html路径，若不存在则创建
-        File userFile = new File(pathTotal.getHtmlPath() + "\\" + user.getUsername());
+        File userFile = new File(pathTotal.getHtmlPath() + "/" + user.getUsername());
         if (!userFile.exists()) {
             userFile.mkdir();
         }
         //根据使用次数创建文件夹，若不存在则创建一个新的文件夹
-        String savaSplitPath = userFile.getAbsolutePath() + "\\" + times;
+        String savaSplitPath = userFile.getAbsolutePath() + "/" + times;
         //本次转换的pdf分离后所保存的文件夹
         File savaSplitPathFile = new File(savaSplitPath);
         if (!savaSplitPathFile.exists()) {
@@ -159,19 +159,19 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //获取需要转换为Epub的html文件集合路径
         String htmlInfoSavePath = htmlInfo.getSavePath();
         //获取该用户下的专属Epub文件夹，若不存在则创建
-        File userFile = new File(pathTotal.getEpubPath() + "\\" + user.getUsername());
+        File userFile = new File(pathTotal.getEpubPath() + "/" + user.getUsername());
         if (!userFile.exists()) {
             userFile.mkdir();
         }
         //获取最终Epub的文件名
         String EpubName = pdfInfo.getPdfName().substring(0, pdfInfo.getPdfName().lastIndexOf(".")) + ".epub";
         //创建本次所需要保存的文件夹
-        File saveFile = new File(userFile.getAbsolutePath() + "\\" + user.getUseTimes());
+        File saveFile = new File(userFile.getAbsolutePath() + "/" + user.getUseTimes());
         if (!saveFile.exists()) {
             saveFile.mkdir();
         }
         //获取此次需要存放Epub的位置
-        String saveEpubPath = userFile.getAbsolutePath() + "\\" + user.getUseTimes() + "\\" + EpubName;
+        String saveEpubPath = userFile.getAbsolutePath() + "/" + user.getUseTimes() + "/" + EpubName;
         //调用工具类生成Epub文件
         EpubUtil.toEpub(htmlInfoSavePath, saveEpubPath);
         //获取当前时间
@@ -204,7 +204,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         Integer times = user.getUseTimes();
         times++;
         user.setLastTime(CommonUtils.dateFormatRightNow()).setUseTimes(times);
-        String savaSplitPath = uploadFile.getParent() + "\\" + times;
+        String savaSplitPath = uploadFile.getParent() + "/" + times;
         File savaSplitPathFile = new File(savaSplitPath);
         if (!savaSplitPathFile.exists()) {
             savaSplitPathFile.mkdir();
@@ -241,19 +241,19 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         String splitPath = pdfInfo.getSplitPath();
         File oldFile = new File(splitPath);
         File[] files = oldFile.listFiles();
-        for (File file : files) {
-            file.delete();
-        }
+        //for (File file : files) {
+        //    file.delete();
+        //}
         //获取保存html的文件夹，删除下面的所有文件夹,与上面同理
         String savePath = htmlInfo.getSavePath();
         File file = new File(savePath);
         File[] files1 = file.listFiles();
-        for (File file1 : files1) {
-            while (file1.exists()) {
-                System.gc();
-                file1.delete();
-            }
-        }
+        //for (File file1 : files1) {
+        //    while (file1.exists()) {
+        //        System.gc();
+        //        file1.delete();
+        //    }
+        //}
         //得到用户上传的pdf，并且保存将分隔pdf的文件夹作为目标文件夹
         File pdfFile = new File(pdfInfo.getSavePath());
 
@@ -261,7 +261,7 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         int bytesRead;
         OutputStream outputStream = null;
         InputStream inputStream = new FileInputStream(pdfFile);
-        outputStream = new FileOutputStream(splitPath + "\\" + pdfInfo.getPdfName());
+        outputStream = new FileOutputStream(splitPath + "/" + pdfInfo.getPdfName());
         while ((bytesRead = inputStream.read(buf)) > 0) {
             outputStream.write(buf, 0, bytesRead);
         }

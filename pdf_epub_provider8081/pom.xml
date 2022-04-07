@@ -16,6 +16,16 @@
     </properties>
     <dependencies>
 
+<!--        nacos依赖-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+<!--        </dependency>-->
+
         <!-- 自己导入的jar-->
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -50,6 +60,11 @@
             <artifactId>spire.pdf</artifactId>
             <version>4.10.2</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId> e-iceblue </groupId>-->
+<!--            <artifactId>spire.pdf</artifactId>-->
+<!--            <version>3.8.2</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -98,8 +113,7 @@
     <repositories>
         <repository>
             <id>com.e-iceblue</id>
-            <name>e-iceblue</name>
-            <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
+            <url>https://repo.e-iceblue.cn/repository/maven-public/</url>
         </repository>
     </repositories>
 

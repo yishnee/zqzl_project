@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8084 #单机为 8084 分布式为 8085
   tomcat:
     max-swallow-size: 100MB
 spring:
@@ -12,6 +12,10 @@ spring:
       url: jdbc:mysql://47.97.7.63:3306/conveter?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
       username: zqzl
       password: zqzl123456
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:8848 # nacos 配置中心地址
   jpa:
     database: mysql
     show-sql: false  #展示SQL语句
@@ -33,6 +37,12 @@ com:
     PdfPath: D:\data\pdf\Test\PdfTotal
     HtmlPath: D:\data\pdf\Test\HtmlTotal
     TxtPath: D:\data\pdf\Test\TxtTotal
+
+#Linux位置
+#    EpubPath: /tmp/pdf2epub/EpubTotal
+#    PdfPath: /tmp/pdf2epub/PdfTotal
+#    HtmlPath: /tmp/pdf2epub/HtmlTotal
+#    TxtPath: /tmp/pdf2epub/TxtTotal
 logging:
   config: classpath:logback-spring.xml
   level:

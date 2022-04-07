@@ -102,7 +102,7 @@ public class PdfUtil {
             //TODO
             //System.out.println("***2***"+pdf.getDocumentInformation().getTitle());
             pdf.getConvertOptions().setPdfToHtmlOptions(true, true);
-            File outFile = new File(targetFilePath + "\\" + files[i].getName().substring(0, files[i].getName().indexOf(".")) + ".html");
+            File outFile = new File(targetFilePath + "/" + files[i].getName().substring(0, files[i].getName().indexOf(".")) + ".html");
             OutputStream outputStream = new FileOutputStream(outFile);
             pdf.saveToStream(outputStream, FileFormat.HTML);
             pdf.close();
