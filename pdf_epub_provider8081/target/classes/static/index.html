@@ -43,13 +43,17 @@
                             setTimeout(() => document.getElementById("download").removeAttribute('hidden'), 2200);
                         }, 1000);
                         progressbar.progressbar("value", 99);
+                        $('#fileName-label').attr('for','pdfFile');
+                        fileLength = 0;
                     }),
                     error: (function (returnMsg) {
                         console.log("上传失败" + returnMsg);
                         progressbar.progressbar("value", 100);
-                        fileName.innerHTML = "上传失败，请重新单击此处选择转换文件";
+                        fileName.innerHTML = "上传失败，请单击此处重新选择转换文件";
                         document.getElementById("upload").removeAttribute('hidden');
                         $('#progressbar').attr('hidden', 'hidden');
+                        $('#fileName-label').attr('for','pdfFile');
+                        fileLength = 0;
                     })
                 });
             } else if (fileLength > 1) {
@@ -76,13 +80,17 @@
                             setTimeout(() => document.getElementById("download").removeAttribute('hidden'), 2000);
                         }, 1000);
                         progressbar.progressbar("value", 99);
+                        $('#fileName-label').attr('for','pdfFile');
+                        fileLength = 0;
                     }),
                     error: (function (returnMsg) {
                         console.log("上传失败" + returnMsg);
                         progressbar.progressbar("value", 100);
-                        fileName.innerHTML = "上传失败，请重新单击此处选择转换文件";
+                        fileName.innerHTML = "上传失败，请单击此处重新选择转换文件";
                         document.getElementById("upload").removeAttribute('hidden');
                         $('#progressbar').attr('hidden', 'hidden');
+                        $('#fileName-label').attr('for','pdfFile');
+                        fileLength = 0;
                     }),
                 });
             } else {
@@ -90,14 +98,15 @@
                 return;
             }
 
+            //重置file的outerHTML，确保input中没有文件存在，再开始下一次文件转换。
+            var file = document.getElementById('pdfFile');
+            file.outerHTML = file.outerHTML;
+
             setTimeout(function () {
                 $('#upload').attr('hidden', 'hidden');
             }, 4000);
             document.getElementById("progressbar").removeAttribute('hidden');
-
-            //重置file的outerHTML，确保input中没有文件存在，再开始下一次文件转换。
-            var file = document.getElementById('pdfFile');
-            file.outerHTML = file.outerHTML;
+            document.getElementById("fileName-label").removeAttribute('for');
 
             //进度条
             var progressbar = $("#progressbar");
@@ -165,20 +174,36 @@
             setTimeout(function () {
                 $('#download').attr('hidden', 'hidden');
                 document.getElementById("upload").removeAttribute('hidden');
-                fileName.innerHTML = "单击此处选择文件📄";
+                fileName.innerHTML = "点击添加PDF文件";
             }, 4000);
         }
+
+
     </script>
 </head>
 
 <body>
 <section class="content" role="document">
     <main class="main">
-        <section class="hero">
+        <section id="hero" class="hero">
+            <div class="pens-illustration">
+                <div class="pen-illustration">
+                    <object type="image/svg+xml" data="images/illustrations/pen.svg" class="illustration-pen">
+                        Pen
+                    </object>
+                </div>
+                <div class="pen-illustration1">
+                    <object type="image/svg+xml" data="images/illustrations/pen.svg" class="illustration-pen">
+                        Pen
+                    </object>
+                </div>
+            </div>
             <div class="hero-content">
                 <h1 class="hero-title">PDF TO EPUB</h1>
                 <p class="hero-description">We make pdf-to-epub converter</p>
-                <a class="hero-button" href="#who">Start the conversion</a>
+                <a class="hero-button" href="#who">
+                    <div class="button-div">Start the conversion</div>
+                </a>
             </div>
             <div class="hero-illustrations">
                 <object type="image/svg+xml" data="images/illustrations/webpage.svg" class="illustration-webpage">
@@ -187,25 +212,29 @@
                 <object type="image/svg+xml" data="images/illustrations/team.svg" class="illustration-team">
                     Team
                 </object>
-                <object type="image/svg+xml" data="images/illustrations/pen.svg" class="illustration-pen">
-                    Pen
-                </object>
             </div>
         </section>
 
         <div id="progressbar" style="height: 10px;" hidden></div>
 
         <section id="who" class="contact">
+            <a class="back-hero" href="#hero">
+                <img class="back-arrow" src="./images/illustrations/back-arrow.png" alt="返回">
+            </a>
             <div class="contact-wrapper">
-                <div class="contact-content" style="text-align: left">
+                <div class="contact-content">
                     <div class="upload_border">
                         <div id="uploader">
                             <div class="ajax-upload">
-                                <h3 class="contact-title" style="margin-top: 50px; margin-bottom: 10px;">👇</h3>
-                                <label class="action-label" for="pdfFile">
-                                    <h3 id="fileName" class="contact-title">单击此处选择文件📄</h3>
+                                <img style="margin-top: 50px;" src="./images/illustrations/PDF-icon.png">
+                                <h3 style="margin-bottom: 10px; font-size: 1.1rem;">
+                                    上传文件不大于100M
+                                </h3>
+                                <label id="fileName-label" class="action-label" for="pdfFile">
+                                    <h3 id="fileName" class="contact-title">点击添加PDF文件</h3>
                                 </label>
                                 <input type="file" id="pdfFile" name="pdfFile" class="file-input"
+                                       accept="application/pdf"
                                        onchange="fileLength = this.files.length;
                                                 var fileName = document.getElementById('fileName');
                                                     if (fileLength == 1) {
@@ -218,7 +247,7 @@
                                                     }
                                                 }"
                                        multiple required hidden>
-                                <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+                                <div style="display: flex; justify-content: center; margin-bottom: 10px;">
                                     <button class="button" id="upload" type="submit" onclick="upLoad()">
                                         <div class="inner">
                                             <div class="zipper">
@@ -258,8 +287,8 @@
                                     </script>
 
                                 </div><!--button_div_end-->
-                                <div style="font-size: 14px; color: gray; margin-bottom: 10px;">
-                                    <span style="color: red;">*</span>&nbsp;要想上传多个文件请按住ctrl，再进行文件选择
+                                <div style="font-weight: bold; font-size: 14px; color: gray; margin-bottom: 20px;">
+                                    <span style="color: red;">注 : </span>&nbsp;要想上传多个文件请按住ctrl，再进行文件选择
                                 </div>
                             </div><!--ajax-upload_div_end-->
                         </div><!--uploader_div_end-->
