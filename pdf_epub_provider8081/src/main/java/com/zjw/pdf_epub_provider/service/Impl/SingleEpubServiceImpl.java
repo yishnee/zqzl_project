@@ -9,7 +9,6 @@ import com.zjw.pdf_epub_provider.entity.*;
 import com.zjw.pdf_epub_provider.service.SingleEpubService;
 import com.zjw.pdf_epub_provider.utils.CommonUtils;
 import com.zjw.pdf_epub_provider.utils.EpubUtil;
-import com.zjw.pdf_epub_provider.utils.PdfToTxtUtil;
 import com.zjw.pdf_epub_provider.utils.PdfUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +44,8 @@ public class SingleEpubServiceImpl implements SingleEpubService {
 
     @Autowired
     PathTotal pathTotal;
+
+
 
     /**
      * 用于保存用户上传的pdf文件
@@ -124,14 +125,14 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //获得HtmlTotal文件下该用户专属的Html路径，若不存在则创建
         File userFile = new File(pathTotal.getHtmlPath() + "/" + user.getUsername());
         if (!userFile.exists()) {
-            userFile.mkdir();
+            userFile.mkdirs();
         }
         //根据使用次数创建文件夹，若不存在则创建一个新的文件夹
         String savaSplitPath = userFile.getAbsolutePath() + "/" + times;
         //本次转换的pdf分离后所保存的文件夹
         File savaSplitPathFile = new File(savaSplitPath);
         if (!savaSplitPathFile.exists()) {
-            savaSplitPathFile.mkdir();
+            savaSplitPathFile.mkdirs();
         }
         //获取当前时间
         Calendar calendar = new GregorianCalendar();
@@ -161,14 +162,14 @@ public class SingleEpubServiceImpl implements SingleEpubService {
         //获取该用户下的专属Epub文件夹，若不存在则创建
         File userFile = new File(pathTotal.getEpubPath() + "/" + user.getUsername());
         if (!userFile.exists()) {
-            userFile.mkdir();
+            userFile.mkdirs();
         }
         //获取最终Epub的文件名
         String EpubName = pdfInfo.getPdfName().substring(0, pdfInfo.getPdfName().lastIndexOf(".")) + ".epub";
         //创建本次所需要保存的文件夹
         File saveFile = new File(userFile.getAbsolutePath() + "/" + user.getUseTimes());
         if (!saveFile.exists()) {
-            saveFile.mkdir();
+            saveFile.mkdirs();
         }
         //获取此次需要存放Epub的位置
         String saveEpubPath = userFile.getAbsolutePath() + "/" + user.getUseTimes() + "/" + EpubName;

@@ -5,7 +5,6 @@ import com.zjw.pdf_epub_provider.entity.PathTotal;
 import com.zjw.pdf_epub_provider.entity.User;
 import com.zjw.pdf_epub_provider.service.MulEpubService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
