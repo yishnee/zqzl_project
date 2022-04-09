@@ -50,7 +50,7 @@ index上传连接:
 - http://47.97.7.63:10010/PdfToEpub/upload/many
 
 index下载连接:
-- http://47.97.7.63:10010/PdfToEpub/upload/one
+- http://47.97.7.63:8085/PdfToEpub/upload/one
 
 ---
 ### 文件缓存地址(文件夹需要提前创建):
