@@ -53,7 +53,7 @@ index下载连接:
 - http://47.97.7.63:8085/PdfToEpub/upload/one
 
 ---
-### 文件缓存地址(文件夹需要提前创建):
+### 文件缓存地址:
 #### Windows:
   
     EpubPath: D:\data\pdf\Test\EpubTotal
