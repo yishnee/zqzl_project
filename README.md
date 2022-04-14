@@ -10,6 +10,7 @@ index上传连接:
     
 index下载连接:
 - http://localhost:8084/PdfToEpub/download/one
+- http://localhost:8084/PdfToEpub/download/many
 
 sql: 
 - jdbc:mysql://localhost:3306/conveter?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
