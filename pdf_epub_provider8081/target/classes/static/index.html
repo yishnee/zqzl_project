@@ -107,6 +107,7 @@
             }, 4000);
             document.getElementById("progressbar").removeAttribute('hidden');
             document.getElementById("fileName-label").removeAttribute('for');
+            downloadFileLength = fileLength;
 
             //进度条
             var progressbar = $("#progressbar");
@@ -140,7 +141,7 @@
 
         function downLoad() {
 
-            if (fileLength > 1) {
+            if (downloadFileLength > 1) {
                 // 请求地址
                 var url = "http://localhost:8084/PdfToEpub/download/one";//单机版
                 // var url = "http://47.97.7.63:8084/PdfToEpub/download/one";//单体服务器版
@@ -152,7 +153,7 @@
                 form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", filePath[j++]));
                 // 提交
                 form.appendTo('body').submit().remove();
-            } else if (fileLength == 1) {
+            } else if (downloadFileLength == 1) {
                 var url = "http://localhost:8084/PdfToEpub/download/one";//单机版
                 // var url = "http://47.97.7.63:8084/PdfToEpub/download/one";//单体服务器版
                 // var url = "http://47.97.7.63:8085/PdfToEpub/download/one";//分布式版
@@ -163,12 +164,12 @@
                 j++;
             }
 
-            if (j < fileLength) {
+            if (j < downloadFileLength) {
                 time1 = setInterval("downLoad()", 1000);
             } else {
                 clearInterval(time1);
                 j = 0;
-                fileLength = 0;
+                downloadFileLength = 0;
             }
 
             setTimeout(function () {
@@ -260,7 +261,6 @@
                                             </svg>
                                         </div>
                                     </button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button class="button" id="download" type="submit" onclick="downLoad()" hidden>
                                         <div class="inner">
                                             <div class="zipper">
