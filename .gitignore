@@ -1,7 +1,9 @@
 # Compiled class file
 *.class
 */.settings
-/target/
+
+**/target/
+
 *.prefs
 .factorypath
 .springBeans
@@ -10,10 +12,12 @@
 /.metadata/
 .idea/
 *.iml
-target/
 rebel.xml
 .DS_Store
 */.DS_Store
+
+**/mvnw
+**/mvnw.cmd
 
 # Log file
 *.log

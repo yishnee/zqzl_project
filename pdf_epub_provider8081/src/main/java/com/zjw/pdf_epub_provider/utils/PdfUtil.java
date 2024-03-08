@@ -56,7 +56,7 @@ public class PdfUtil {
         //读取pdf相关信息
         //PDFReader.getPDFCatalog(pdfFilePath);
 
-        // pdf详细信息 目前先不用
+        // pdf详细信息
         //PDFReader.getPDFInformation(pdfFilePath);
 
         //目录文件打印

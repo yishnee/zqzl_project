@@ -1,4 +1,9 @@
-# zqzl_project
+# PDF 文本格式 To EPUB 电子图书格式自动转换工具
+## zqzl_project
+
+开发团队：ZQZL
+
+团队人员：周智锐 邱杭祺 周津葳 林雯雯
 
 ### 页面index
 pdf_epub_provider8081/src/main/resources/static/index.html
@@ -53,10 +58,10 @@ index上传连接:
 - http://47.97.7.63:10010/PdfToEpub/upload/many
 
 index下载连接:
-- http://47.97.7.63:10010/PdfToEpub/upload/one
+- http://47.97.7.63:8085/PdfToEpub/upload/one
 
 ---
-### 文件缓存地址(文件夹需要提前创建):
+### 文件缓存地址:
 #### Windows:
   
     EpubPath: D:\data\pdf\Test\EpubTotal

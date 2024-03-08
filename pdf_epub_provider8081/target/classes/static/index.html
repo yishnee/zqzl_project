@@ -26,7 +26,7 @@
                 formData.append('pdfFile', $('#pdfFile')[0].files[0]);
                 $.ajax({
                     url: "http://localhost:8084/PdfToEpub/upload/one",//单机版
-                    //url: "http://47.97.7.63:8084/PdfToEpub/upload/one",//单体服务器版
+                    // url: "http://47.97.7.63:8084/PdfToEpub/upload/one",//单体服务器版
                     // url: "http://47.97.7.63:10010/PdfToEpub/upload/one",//分布式版
                     type: "post",
                     data: formData,
